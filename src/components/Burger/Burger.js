@@ -1,19 +1,17 @@
 import React from 'react';
-import './Burguer.css';
-import BurguerIngredient from './BurguerIngredient/BurguerIngredient';
+import './Burger.css';
+import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
-const Burguer = props => {
+const Burger = props => {
   let tranformedIngredients = Object.keys(props.ingredients)
     .map(ingredient => {
       return [...Array(props.ingredients[ingredient])].map((_, i) => {
-        return <BurguerIngredient key={ingredient + i} type={ingredient} />;
+        return <BurgerIngredient key={ingredient + i} type={ingredient} />;
       });
     })
     .reduce((prev, next) => {
       return [...prev, ...next];
     }, []);
-
-    console.log(tranformedIngredients)
 
   if (!tranformedIngredients.length) {
     tranformedIngredients = <div>Please start adding ingredients</div>;
@@ -21,11 +19,11 @@ const Burguer = props => {
 
   return (
     <div className="Burguer">
-      <BurguerIngredient type="bread-top" />
+      <BurgerIngredient type="bread-top" />
       {tranformedIngredients}
-      <BurguerIngredient type="bread-bottom" />
+      <BurgerIngredient type="bread-bottom" />
     </div>
   );
 };
 
-export default Burguer;
+export default Burger;
