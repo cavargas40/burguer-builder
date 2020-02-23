@@ -2,18 +2,27 @@ import React from 'react';
 
 import Logo from '../../Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
+import Backdrop from '../../UI/Backdrop/Backdrop';
+import Aux from '../../../hoc/Auxiliar';
 import './SideDrawer.css';
 
 const SideDrawer = props => {
+  let attachClasses = ['SideDrawer', 'Close'];
+  if (props.open) {
+    attachClasses = ['SideDrawer', 'Open'];
+  }
   return (
-    <div className="SideDrawer">
-      <div className="LogoContainer">
-        <Logo />
+    <Aux>
+      <Backdrop show={props.open} clicked={props.closed} />
+      <div className={attachClasses.join(' ')}>
+        <div className="LogoContainer">
+          <Logo />
+        </div>
+        <nav>
+          <NavigationItems />
+        </nav>
       </div>
-      <nav>
-        <NavigationItems />
-      </nav>
-    </div>
+    </Aux>
   );
 };
 
