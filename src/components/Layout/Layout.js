@@ -2,10 +2,12 @@ import React from 'react';
 import './Layout.css';
 import Aux from '../../hoc/Auxiliar';
 import Toolbar from '../Navigation/Toolbar/Toolbar';
+import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 
 const Layout = props => (
   <Aux>
-    <Toolbar></Toolbar>
+    <Toolbar />
+    <SideDrawer />
     <main className="Content">{props.children}</main>
   </Aux>
 );
