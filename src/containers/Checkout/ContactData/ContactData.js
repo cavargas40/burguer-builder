@@ -20,7 +20,7 @@ class ContactData extends React.Component {
     this.setState({ isLoading: true });
     const order = {
       ingredients: this.props.ingredients,
-      price: this.props.price.toFixed(2),
+      price: this.props.price,
       customer: {
         name: 'Carlos',
         address: {
