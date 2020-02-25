@@ -94,32 +94,6 @@ class BurgerBuilder extends React.Component {
   };
 
   purchaseContinueHandler = () => {
-    // this.setState({ isLoading: true });
-    // const order = {
-    //   ingredients: this.state.ingredients,
-    //   price: this.state.totalPrice.toFixed(2),
-    //   customer: {
-    //     name: 'Carlos',
-    //     address: {
-    //       street: 'Teststreet 1',
-    //       zipCode: '41531',
-    //       country: 'Colombia'
-    //     },
-    //     email: 'test@test.com'
-    //   },
-    //   deliveryMethod: 'fastest'
-    // };
-
-    // axios
-    //   .post('/orders.json', order)
-    //   .then(response => {
-    //     console.log(response);
-    //     this.setState({ isLoading: false, purchasing: false });
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //     this.setState({ isLoading: false, purchasing: false });
-    //   });
     const queryParams = [];
     for (let i in this.state.ingredients) {
       queryParams.push(
@@ -128,6 +102,7 @@ class BurgerBuilder extends React.Component {
         )}`
       );
     }
+    queryParams.push(`price=${this.state.totalPrice}`);
     const queryString = queryParams.join('&');
     this.props.history.push({
       pathname: '/checkout',
