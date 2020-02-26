@@ -1,4 +1,4 @@
 export const ActionTypes = {
-    AddIngredients: 'ADD_INGREDIENTS',
+    AddIngredient: 'ADD_INGREDIENT',
     RemoveIngredient: 'REMOVE_INGREDIENT'
 }
