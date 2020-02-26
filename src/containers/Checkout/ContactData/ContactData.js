@@ -12,41 +12,41 @@ class ContactData extends React.Component {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          placeholder: 'Your Name',
-          value: ''
-        }
+          placeholder: 'Your Name'
+        },
+        value: ''
       },
       street: {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          placeholder: 'Your Street',
-          value: ''
-        }
+          placeholder: 'Your Street'
+        },
+        value: ''
       },
       zipCode: {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          placeholder: 'ZIP Code',
-          value: ''
-        }
+          placeholder: 'ZIP Code'
+        },
+        value: ''
       },
       country: {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          placeholder: 'Your Country',
-          value: ''
-        }
+          placeholder: 'Your Country'
+        },
+        value: ''
       },
       email: {
         elementType: 'input',
         elementConfig: {
           type: 'email',
-          placeholder: 'Your Mail',
-          value: ''
-        }
+          placeholder: 'Your Mail'
+        },
+        value: ''
       },
       deliveryMethod: {
         elementType: 'select',
@@ -69,21 +69,30 @@ class ContactData extends React.Component {
 
   orderHandler = event => {
     event.preventDefault();
-    this.setState({ isLoading: true });
+    console.log('llego');
+    this.setState({ loading: true });
+    const formData = {};
+    for (let formElementIdentifier in this.state.orderForm) {
+      formData[formElementIdentifier] = this.state.orderForm[
+        formElementIdentifier
+      ].value;
+    }
+
     const order = {
       ingredients: this.props.ingredients,
-      price: this.props.price
+      price: this.props.price,
+      orderData: formData
     };
 
     axios
       .post('/orders.json', order)
       .then(response => {
-        this.setState({ isLoading: false });
+        this.setState({ loading: false });
         this.props.history.push('/');
       })
       .catch(error => {
         console.log(error);
-        this.setState({ isLoading: false });
+        this.setState({ loading: false });
       });
   };
 
@@ -95,7 +104,7 @@ class ContactData extends React.Component {
 
     updatedFormElement.value = event.target.value;
     updatedOrderForm[inputIdentifier] = updatedFormElement;
-    this.setState({ formElement: updatedOrderForm });
+    this.setState({ orderForm: updatedOrderForm });
   };
 
   render() {
@@ -108,7 +117,7 @@ class ContactData extends React.Component {
     }
 
     let form = (
-      <form>
+      <form onSubmit={this.orderHandler}>
         {formElementsArray.map(formElement => (
           <Input
             key={formElement.id}
@@ -118,9 +127,7 @@ class ContactData extends React.Component {
             changed={event => this.inputChangedHandler(event, formElement.id)}
           />
         ))}
-        <Button btnType="Success" clicked={this.orderHandler}>
-          ORDER
-        </Button>
+        <Button btnType="Success">ORDER</Button>
       </form>
     );
     if (this.state.loading) {
