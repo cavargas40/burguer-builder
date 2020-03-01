@@ -45,7 +45,7 @@ const reducer = (state = initialState, action) => {
         },
         error: false
       };
-    case ActionTypes.fetchIngredientsFail:
+    case ActionTypes.FetchIngredientsFail:
       return {
         ...state,
         error: true
