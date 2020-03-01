@@ -8,7 +8,7 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import { ActionTypes } from '../../store/actions';
+import * as burgerBuilderActions from '../../store/actions';
 
 class BurgerBuilder extends React.Component {
   state = {
@@ -31,7 +31,7 @@ class BurgerBuilder extends React.Component {
     })
   ];
 
-  updatePurchaseState (ingredients) {
+  updatePurchaseState(ingredients) {
     const sum = Object.keys(ingredients)
       .map(igKey => {
         return ingredients[igKey];
@@ -41,7 +41,7 @@ class BurgerBuilder extends React.Component {
       }, 0);
 
     return sum > 0;
-  };
+  }
 
   purchaseCancelHandler = () => {
     this.setState({ purchasing: false });
@@ -120,9 +120,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onIngredientAdded: ingredientName =>
-      dispatch({ type: ActionTypes.AddIngredient, ingredientName }),
+      dispatch(burgerBuilderActions.addIngredient(ingredientName)),
     onIngredientRemoved: ingredientName =>
-      dispatch({ type: ActionTypes.RemoveIngredient, ingredientName })
+      dispatch(burgerBuilderActions.removeIngredient(ingredientName))
   };
 };
 
