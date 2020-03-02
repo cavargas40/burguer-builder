@@ -24,7 +24,7 @@ export const authFail = error => {
 
 export const auth = (email, password, isSignUp) => {
   return dispatch => {
-    dispatch(authStart);
+    dispatch(authStart());
     let url =
       'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyACiXOSsGz-XwVYACzn5oO9fWVPdE5Hcns';
     if (!isSignUp) {
@@ -42,8 +42,7 @@ export const auth = (email, password, isSignUp) => {
         dispatch(authSuccess(response.data.idToken, response.data.localId));
       })
       .catch(error => {
-        console.log(error);
-        dispatch(authFail(error));
+        dispatch(authFail(error.response.data.error));
       });
   };
 };
