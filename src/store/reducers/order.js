@@ -2,11 +2,17 @@ import { ActionTypes } from '../actions/actionTypes';
 
 const initialState = {
   orders: [],
-  loading: false
+  loading: false,
+  purchased: false
 };
 
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionTypes.PurchaseInit:
+      return {
+        ...state,
+        purchased: false
+      };
     case ActionTypes.PurchaseBurgerStart:
       return {
         ...state,
@@ -20,6 +26,7 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        purchased: true,
         orders: [...state.orders, newOrder]
       };
     case ActionTypes.PurchaseBurgerFail:
