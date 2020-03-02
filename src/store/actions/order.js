@@ -39,3 +39,41 @@ export const purchaseInit = () => {
     type: ActionTypes.PurchaseInit
   };
 };
+
+export const fetchOrdersSuccess = orders => {
+  return {
+    type: ActionTypes.FetchOrdersSuccess,
+    orders
+  };
+};
+
+export const fetchOrdersFail = error => {
+  return {
+    type: ActionTypes.FetchOrdersFail,
+    error
+  };
+};
+
+export const fetchOrdersStart = () => {
+  return {
+    type: ActionTypes.FetchOrdersStart
+  };
+};
+
+export const fetchOrders = () => {
+  return dispatch => {
+    dispatch(fetchOrdersStart());
+    axios
+      .get('/orders.json')
+      .then(res => {
+        const orders = Object.keys(res.data).reduce((prev, order) => {
+          prev.push({ ...res.data[order], id: order });
+          return prev;
+        }, []);
+        dispatch(fetchOrdersSuccess(orders));
+      })
+      .catch(error => {
+        dispatch(fetchOrdersFail(error));
+      });
+  };
+};
