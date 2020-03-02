@@ -7,6 +7,11 @@ const initialState = {
 
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionTypes.PurchaseBurgerStart:
+      return {
+        ...state,
+        loading: true
+      };
     case ActionTypes.PurchaseBurgerSuccess:
       const newOrder = {
         ...action.orderData,
@@ -19,9 +24,8 @@ const orderReducer = (state = initialState, action) => {
       };
     case ActionTypes.PurchaseBurgerFail:
       return {
-          ...state,
-          loading: false,
-          
+        ...state,
+        loading: false
       };
     default:
       return state;
