@@ -11,5 +11,9 @@ export const ActionTypes = {
 
   FetchOrdersStart: 'FETCH_ORDERS_START',
   FetchOrdersSuccess: 'FETCH_ORDERS_SUCCESS',
-  FetchOrdersFail: 'FETCH_ORDERS_FAIL'
+  FetchOrdersFail: 'FETCH_ORDERS_FAIL',
+
+  AuthStart: 'AUTH_START',
+  AuthSuccess: 'AUTH_SUCCESS',
+  AuthFail: 'AUTH_FAIL'
 };
