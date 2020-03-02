@@ -6,50 +6,78 @@ const initialState = {
   purchased: false
 };
 
+const purchaseInit = state => {
+  return {
+    ...state,
+    purchased: false
+  };
+};
+
+const fetchOrdersFail = state => {
+  return {
+    ...state,
+    loading: false
+  };
+};
+
+const fetchOrdersSuccess = (state, action) => {
+  return {
+    ...state,
+    orders: action.orders,
+    loading: false
+  };
+};
+
+const fetchOrdersStart = state => {
+  return {
+    ...state,
+    loading: true
+  };
+};
+
+const purchaseBurgerFail = state => {
+  return {
+    ...state,
+    loading: false
+  };
+};
+
+const purchaseBurgerSuccess = (action, state) => {
+  const newOrder = {
+    ...action.orderData,
+    id: action.orderId
+  };
+  return {
+    ...state,
+    loading: false,
+    purchased: true,
+    orders: [...state.orders, newOrder]
+  };
+};
+
+const purchaseBurgerStart = state => {
+  return {
+    ...state,
+    loading: true
+  };
+};
+
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.PurchaseInit:
-      return {
-        ...state,
-        purchased: false
-      };
+      return purchaseInit(state);
     case ActionTypes.PurchaseBurgerStart:
-      return {
-        ...state,
-        loading: true
-      };
+      return purchaseBurgerStart(state);
     case ActionTypes.PurchaseBurgerSuccess:
-      const newOrder = {
-        ...action.orderData,
-        id: action.orderId
-      };
-      return {
-        ...state,
-        loading: false,
-        purchased: true,
-        orders: [...state.orders, newOrder]
-      };
+      return purchaseBurgerSuccess(action, state);
     case ActionTypes.PurchaseBurgerFail:
-      return {
-        ...state,
-        loading: false
-      };
+      return purchaseBurgerFail(state);
     case ActionTypes.FetchOrdersStart:
-      return {
-        ...state,
-        loading: true
-      };
+      return fetchOrdersStart(state);
     case ActionTypes.FetchOrdersSuccess:
-      return {
-        ...state,
-        orders: action.orders,
-        loading: false
-      };
+      return fetchOrdersSuccess(state, action);
     case ActionTypes.FetchOrdersFail:
-      return {
-        ...state,
-        loading: false
-      };
+      return fetchOrdersFail(state);
     default:
       return state;
   }

@@ -13,44 +13,60 @@ const INGREDIENT_PRICES = {
   bacon: 0.7
 };
 
+const addIngredient = (state, action) => {
+  return {
+    ...state,
+    ingredients: {
+      ...state.ingredients,
+      [action.ingredientName]: state.ingredients[action.ingredientName] + 1
+    },
+    totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+  };
+};
+
+const removeIngredient = (state, action) => {
+  return {
+    ...state,
+    ingredients: {
+      ...state.ingredients,
+      [action.ingredientName]: state.ingredients[action.ingredientName] - 1
+    },
+    totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
+  };
+};
+
+const setIngredients = (state, action) => {
+  const { salad, bacon, cheese, meat } = action.ingredients;
+  return {
+    ...state,
+    ingredients: {
+      salad,
+      bacon,
+      cheese,
+      meat
+    },
+    totalPrice: 4,
+    error: false
+  };
+};
+
+const fetchIngredientsFail = state => {
+  return {
+    ...state,
+    error: true
+  };
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.AddIngredient:
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingredientName]: state.ingredients[action.ingredientName] + 1
-        },
-        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
-      };
+      return addIngredient(state, action);
     case ActionTypes.RemoveIngredient:
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingredientName]: state.ingredients[action.ingredientName] - 1
-        },
-        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
-      };
+      return removeIngredient(state, action);
     case ActionTypes.SetIngredients:
-      const { salad, bacon, cheese, meat } = action.ingredients;
-      return {
-        ...state,
-        ingredients: {
-          salad,
-          bacon,
-          cheese,
-          meat
-        },
-        totalPrice: 4,
-        error: false
-      };
+      return setIngredients(state, action);
     case ActionTypes.FetchIngredientsFail:
-      return {
-        ...state,
-        error: true
-      };
+      return fetchIngredientsFail(state);
     default:
       return state;
   }
