@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { ActionTypes } from '../actions/actionTypes';
 
+const FIREBASE_KEY = process.env.REACT_APP_NOT_FIREBASE_KEY;
+
 export const authStart = () => {
   return {
     type: ActionTypes.AuthStart
@@ -43,10 +45,10 @@ export const auth = (email, password, isSignUp) => {
   return dispatch => {
     dispatch(authStart());
     let url =
-      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyACiXOSsGz-XwVYACzn5oO9fWVPdE5Hcns';
+      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_KEY}`;
     if (!isSignUp) {
       url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyACiXOSsGz-XwVYACzn5oO9fWVPdE5Hcns';
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_KEY}`;
     }
     axios
       .post(url, {
@@ -55,7 +57,6 @@ export const auth = (email, password, isSignUp) => {
         returnSecureToken: true
       })
       .then(response => {
-        console.log(response);
         const expirationDate = new Date(
           new Date().getTime() + response.data.expiresIn * 1000
         );
@@ -79,7 +80,6 @@ export const setAuthRedirectPath = path => {
 };
 
 export const authCheckState = () => {
-  console.log('authCheck');
   return dispatch => {
     const token = localStorage.getItem('token');
     if (!token) {
