@@ -16,5 +16,7 @@ export const ActionTypes = {
   AuthStart: 'AUTH_START',
   AuthSuccess: 'AUTH_SUCCESS',
   AuthFail: 'AUTH_FAIL',
-  AuthLogout: 'AUTH_LOGOUT'
+  AuthLogout: 'AUTH_LOGOUT',
+
+  SetAuthRedirectPath: 'SET_AUTH_REDIRECT_PATH'
 };
