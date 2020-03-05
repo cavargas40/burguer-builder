@@ -68,11 +68,13 @@ const Auth = props => {
     setIsSignUp(!isSignup);
   };
 
+  const { onSetAuthRedirectPath, buildingBurger, auth } = props;
+
   useEffect(() => {
-    if (!props.buildingBurger && props.auth !== '/') {
-      props.onSetAuthRedirectPath();
+    if (!buildingBurger && auth !== '/') {
+      onSetAuthRedirectPath();
     }
-  }, [props]);
+  }, [onSetAuthRedirectPath, buildingBurger, auth]);
 
   const formElementsArray = [];
   for (let key in authForm) {
